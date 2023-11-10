@@ -1,0 +1,9 @@
+stages:          # List of stages for jobs, and their order of execution
+  - build
+
+build-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  script:
+    - echo "Clone project ..."
+    - git clone -b $CI_COMMIT_BRANCH http://gitlab-ci-token:$CI_JOB_TOKEN@192.168.100.100:10080/mavou-dev/odoo-modules.git
+    - chmod +x $CI_PROJECT_NAME/.deploy_module.sh && source $CI_PROJECT_NAME/.deploy_module.sh $CI_PROJECT_NAME $NAMESPACE_DEV $APP_DEV $DEPLOYMENT_DEV
